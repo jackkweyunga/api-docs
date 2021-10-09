@@ -1,0 +1,241 @@
+openapi: 3.0.0
+info:
+  title: janja API
+  description: "Janja accounts API endpoints featuring core actions such as user authentication,\
+    \ user creation,"
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/jackkweyunga/janja-api/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /api/v1/users/init/:
+    post:
+      summary: create a new user
+      description: "An endpoint to create a user. If a user already exists, it returns\
+        \ the user object.\n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/new user object'
+      responses:
+        "200":
+          description: your request was a success. The returned object is the one
+            created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserItem'
+  /api/v1/users/me:
+    get:
+      summary: check if a user is logged in
+      description: "If the get request returns a user object, then a jwt token exists,\
+        \ therefore you are logged in.\n    \n"
+      operationId: get logged in user
+      responses:
+        "200":
+          description: query successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserItem'
+  /api/v1/auth/login:
+    post:
+      summary: |
+        Post an email with a password to login.
+      description: Login endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login Information'
+      responses:
+        "200":
+          description: login success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+  /api/v1/auth/logout:
+    post:
+      summary: Post an empty body to logout.
+      description: Logout endpoint
+      responses:
+        "200":
+          description: logout success
+  /api/v1/auth/send-email:
+    post:
+      summary: send email using registered credentials
+      description: Needs you to have created your own credentials or else it defaults
+        to using the janjas default email configurations.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_sendemail_body'
+      responses:
+        "200":
+          description: email sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+  /api/v1/verify-phone/send-sms:
+    post:
+      summary: |
+        post a number to send a verification code from janjas
+      description: mobile number sending otp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verifyphone_sendsms_body'
+      responses:
+        "200":
+          description: otp sent successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+  /api/v1/verify-phone/verify-sms:
+    post:
+      summary: |
+        post a number and code to verify the otp
+      description: mobile number verifing otp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verifyphone_verifysms_body'
+      responses:
+        "200":
+          description: code is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+components:
+  schemas:
+    UserItem:
+      required:
+      - email
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: integer
+          example: "1"
+        name:
+          type: string
+          example: firstname lastname
+        email:
+          type: string
+          format: string
+          example: example@gmail.com
+      example:
+        name: firstname lastname
+        id: "1"
+        email: example@gmail.com
+    new user object:
+      title: new user object
+      properties:
+        email:
+          type: string
+          example: example@gmail.com
+        phone:
+          type: string
+          example: +255712111936
+        password:
+          type: string
+          example: changeme
+    Login Information:
+      title: Login Information
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@gmail.com
+        password:
+          type: string
+          example: "12345678"
+    inline_response_200:
+      type: object
+      properties:
+        token:
+          type: string
+          example: qj982jbc29tcvi2y92cbijeuyd
+        id:
+          type: string
+          example: "1"
+        name:
+          type: string
+          example: my name
+        email:
+          type: string
+          example: example@gmial.com
+      example:
+        name: my name
+        id: "1"
+        email: example@gmial.com
+        token: qj982jbc29tcvi2y92cbijeuyd
+    auth_sendemail_body:
+      type: object
+      properties:
+        subject:
+          type: string
+          example: subject from dev
+        body:
+          type: string
+          example: example body
+        recipient_list:
+          type: array
+          items:
+            example: jackkweyunga@gmail.com
+        emailer_name:
+          type: string
+          example: dev
+    inline_response_200_1:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Email sent!
+        status:
+          type: string
+          example: status.HTTP_200_OK
+      example:
+        message: Email sent!
+        status: status.HTTP_200_OK
+    verifyphone_sendsms_body:
+      type: object
+      properties:
+        number:
+          type: string
+          example: +255712111936
+    inline_response_200_2:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Pending
+      example:
+        message: Pending
+    verifyphone_verifysms_body:
+      type: object
+      properties:
+        number:
+          type: string
+          example: +255712111936
+        code:
+          type: string
+          example: "340726"
+    inline_response_200_3:
+      type: object
+      properties:
+        message:
+          type: string
+          example: verified
+      example:
+        message: verified
