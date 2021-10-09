@@ -76,24 +76,31 @@ var routes = Routes{
 	},
 
 	Route{
+		"ApiV1AuthSendOtpPost",
+		strings.ToUpper("Post"),
+		"/jackkweyunga/janja-api/1.0.0/api/v1/auth/send-otp",
+		ApiV1AuthSendOtpPost,
+	},
+
+	Route{
+		"ApiV1AuthVerifyPhoneSendSmsPost",
+		strings.ToUpper("Post"),
+		"/jackkweyunga/janja-api/1.0.0/api/v1/auth/verify-phone/send-sms",
+		ApiV1AuthVerifyPhoneSendSmsPost,
+	},
+
+	Route{
+		"ApiV1AuthVerifyPhoneVerifySmsPost",
+		strings.ToUpper("Post"),
+		"/jackkweyunga/janja-api/1.0.0/api/v1/auth/verify-phone/verify-sms",
+		ApiV1AuthVerifyPhoneVerifySmsPost,
+	},
+
+	Route{
 		"ApiV1UsersInitPost",
 		strings.ToUpper("Post"),
 		"/jackkweyunga/janja-api/1.0.0/api/v1/users/init/",
 		ApiV1UsersInitPost,
-	},
-
-	Route{
-		"ApiV1VerifyPhoneSendSmsPost",
-		strings.ToUpper("Post"),
-		"/jackkweyunga/janja-api/1.0.0/api/v1/verify-phone/send-sms",
-		ApiV1VerifyPhoneSendSmsPost,
-	},
-
-	Route{
-		"ApiV1VerifyPhoneVerifySmsPost",
-		strings.ToUpper("Post"),
-		"/jackkweyunga/janja-api/1.0.0/api/v1/verify-phone/verify-sms",
-		ApiV1VerifyPhoneVerifySmsPost,
 	},
 
 	Route{

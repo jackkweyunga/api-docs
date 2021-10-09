@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_1'
-  /api/v1/verify-phone/send-sms:
+  /api/v1/auth/verify-phone/send-sms:
     post:
       summary: |
         post a number to send a verification code from janjas
@@ -97,7 +97,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_2'
-  /api/v1/verify-phone/verify-sms:
+  /api/v1/auth/verify-phone/verify-sms:
     post:
       summary: |
         post a number and code to verify the otp
@@ -114,6 +114,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_3'
+  /api/v1/auth/send-otp:
+    post:
+      summary: |
+        post an email to send a verification otp
+      description: email verifing otp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_sendotp_body'
+      responses:
+        "200":
+          description: email is sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
 components:
   schemas:
     UserItem:
@@ -239,3 +256,32 @@ components:
           example: verified
       example:
         message: verified
+    auth_sendotp_body:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@gmail.com
+        email_sender:
+          type: string
+          example: admin
+    inline_response_200_4:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Email sent!
+        email:
+          type: string
+          example: email
+        otp:
+          type: string
+          example: otp
+        status:
+          type: string
+          example: status.HTTP_200_OK
+      example:
+        otp: otp
+        message: Email sent!
+        email: email
+        status: status.HTTP_200_OK
